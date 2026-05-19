@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+:root {
+  --background: #090909;
+  --foreground: #ffffff;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes breathe {
+  0% {
+    transform: scale(1);
+    opacity: 0.92;
+  }
+
+  50% {
+    transform: scale(1.025);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.92;
+  }
+}
+
+@keyframes glowPulseGreen {
+  0% {
+    filter: drop-shadow(0 0 6px rgba(110, 231, 183, 0.18));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 18px rgba(110, 231, 183, 0.32));
+  }
+
+  100% {
+    filter: drop-shadow(0 0 6px rgba(110, 231, 183, 0.18));
+  }
+}
+
+@keyframes glowPulseYellow {
+  0% {
+    filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.16));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 18px rgba(251, 191, 36, 0.28));
+  }
+
+  100% {
+    filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.16));
+  }
+}
+
+@keyframes glowPulseRed {
+  0% {
+    filter: drop-shadow(0 0 6px rgba(248, 113, 113, 0.12));
+    transform: scale(1);
+  }
+
+  8% {
+    filter: drop-shadow(0 0 16px rgba(248, 113, 113, 0.26));
+    transform: scale(1.03);
+  }
+
+  16% {
+    filter: drop-shadow(0 0 8px rgba(248, 113, 113, 0.16));
+    transform: scale(1);
+  }
+
+  24% {
+    filter: drop-shadow(0 0 18px rgba(248, 113, 113, 0.28));
+    transform: scale(1.035);
+  }
+
+  36% {
+    filter: drop-shadow(0 0 6px rgba(248, 113, 113, 0.12));
+    transform: scale(1);
+  }
+
+  100% {
+    filter: drop-shadow(0 0 6px rgba(248, 113, 113, 0.12));
+    transform: scale(1);
+  }
+}
+
+@keyframes ambientDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: translate3d(18px, -14px, 0) scale(1.05);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.7;
+  }
+}
+
+.glow-green {
+  animation:
+    breathe 5s ease-in-out infinite,
+    glowPulseGreen 5s ease-in-out infinite;
+}
+
+.glow-yellow {
+  animation:
+    breathe 5s ease-in-out infinite,
+    glowPulseYellow 5s ease-in-out infinite;
+}
+
+.glow-red {
+  animation: glowPulseRed 3.2s ease-in-out infinite;
+}
+
+.ambient-drift {
+  animation: ambientDrift 12s ease-in-out infinite;
+}
+
+.ambient-drift-slow {
+  animation: ambientDrift 18s ease-in-out infinite;
+}
+@keyframes fadeInSoft {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-soft {
+  animation: fadeInSoft 0.8s ease forwards;
+}
