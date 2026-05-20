@@ -1,7 +1,4 @@
-type InterventionPanelProps = {
-  acceptedAdjustments: string[];
-  acceptAdjustment: (name: string) => void;
-};
+import type { InterventionPanelProps } from "@/types/ui";
 
 export default function InterventionPanel({
   acceptedAdjustments,

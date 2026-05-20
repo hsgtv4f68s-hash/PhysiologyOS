@@ -1,12 +1,71 @@
 type FocusTone = "green" | "yellow" | "red" | null;
 
-export default function PhysiologyBackground({
-  stressOpacity = 0.12,
-  focusTone = null,
-}: {
+type Props = {
   stressOpacity?: number;
   focusTone?: FocusTone;
-}) {
+  variant?: "atmosphere" | "neural";
+};
+
+export default function PhysiologyBackground({
+  stressOpacity = 0.08,
+  focusTone = null,
+  variant = "atmosphere",
+}: Props) {
+  const tone =
+    focusTone === "green"
+      ? "rgba(74,222,128,"
+      : focusTone === "yellow"
+        ? "rgba(250,204,21,"
+        : "rgba(248,113,113,";
+
+  if (variant === "neural") {
+    return (
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <svg className="absolute inset-0 h-full w-full">
+          <defs>
+            <filter id="neuralBlur">
+              <feGaussianBlur stdDeviation="18" />
+            </filter>
+          </defs>
+
+          <g filter="url(#neuralBlur)">
+            <path
+              d="M-100 220 C 180 120, 320 340, 620 240 S 1040 160, 1400 260"
+              stroke={`${tone}${stressOpacity})`}
+              strokeWidth="22"
+              fill="none"
+              className="neural-flow-slow"
+            />
+
+            <path
+              d="M-80 520 C 220 420, 420 660, 720 540 S 1100 460, 1480 620"
+              stroke={`${tone}${stressOpacity * 0.8})`}
+              strokeWidth="18"
+              fill="none"
+              className="neural-flow"
+            />
+
+            <circle
+              cx="760"
+              cy="540"
+              r="16"
+              fill={`${tone}${stressOpacity * 1.8})`}
+              className="neural-node-pulse"
+            />
+
+            <circle
+              cx="1120"
+              cy="260"
+              r="20"
+              fill={`${tone}${stressOpacity * 1.9})`}
+              className="neural-node-pulse-slow"
+            />
+          </g>
+        </svg>
+      </div>
+    );
+  }
+
   const focusColor =
     focusTone === "green"
       ? "bg-emerald-400"
@@ -15,9 +74,6 @@ export default function PhysiologyBackground({
         : focusTone === "red"
           ? "bg-red-400"
           : "bg-white";
-
-  const focusOpacity =
-    focusTone === null ? 0 : 0.12;
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -32,37 +88,10 @@ export default function PhysiologyBackground({
 
       <div
         className={`absolute left-[30%] top-[25%] h-[34rem] w-[34rem] rounded-full ${focusColor} blur-3xl transition-all duration-[900ms]`}
-        style={{ opacity: focusOpacity }}
+        style={{ opacity: focusTone ? 0.12 : 0 }}
       />
 
       <div className="absolute inset-0 opacity-[0.08] neural-grid" />
-
-      <svg
-        className="absolute inset-0 h-full w-full opacity-[0.12] neural-flow"
-        viewBox="0 0 1440 1024"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M120 280 C 320 160, 420 420, 620 300 S 920 220, 1100 360 S 1260 520, 1360 420"
-          fill="none"
-          stroke="rgba(110, 231, 183, 0.45)"
-          strokeWidth="1"
-        />
-
-        <path
-          d="M80 720 C 240 560, 460 660, 620 520 S 880 440, 1040 600 S 1260 760, 1400 620"
-          fill="none"
-          stroke="rgba(248, 113, 113, 0.35)"
-          strokeWidth="1"
-        />
-
-        <path
-          d="M260 120 C 420 240, 500 180, 700 260 S 980 420, 1220 260"
-          fill="none"
-          stroke="rgba(251, 191, 36, 0.28)"
-          strokeWidth="1"
-        />
-      </svg>
     </div>
   );
 }

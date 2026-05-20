@@ -1,25 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-type SystemHeroProps = {
-  teamScore: number;
-  system: {
-    label: string;
-    color: string;
-    glow: string;
-    message: string;
-  };
-  acknowledged: boolean;
-  setAcknowledged: (value: boolean) => void;
-  children?: React.ReactNode;
-};
+import type { SystemHeroProps } from "@/types/ui";
 
 export default function SystemHero({
   teamScore,
   system,
   acknowledged,
   setAcknowledged,
+  acceptedCount,
+  totalInterventions,
   children,
 }: SystemHeroProps) {
   const [expanded, setExpanded] = useState(true);
@@ -33,16 +23,19 @@ export default function SystemHero({
   }, [acknowledged]);
 
   const compact = acknowledged && !expanded;
+  const unresolvedCount = Math.max(totalInterventions - acceptedCount, 0);
 
   return (
     <section
       onClick={() => {
         if (compact) setExpanded(true);
       }}
-      className={`relative mt-12 overflow-hidden rounded-[42px] border transition-all duration-[1200ms] ${
+      className={`relative mt-12 overflow-hidden rounded-[42px] border transition-all duration-[2200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
         compact
-          ? "ml-auto max-w-xl cursor-pointer border-white/10 bg-white/[0.035] p-6 backdrop-blur-3xl"
-          : "border-white/10 bg-white/[0.05] p-12 backdrop-blur-3xl"
+          ? "monitored-hero-breathe ml-auto max-w-xl scale-[0.985] cursor-pointer border-white/10 bg-white/[0.035] p-6 backdrop-blur-3xl"
+          : acknowledged
+            ? "monitored-hero-breathe scale-[1.002] border-white/10 bg-white/[0.045] p-12 backdrop-blur-3xl"
+            : "border-white/10 bg-white/[0.05] p-12 backdrop-blur-3xl"
       }`}
     >
       <div className="absolute inset-0 overflow-hidden">
@@ -117,7 +110,9 @@ export default function SystemHero({
             }`}
           >
             {compact
-              ? "System monitored. Click to expand."
+              ? unresolvedCount > 0
+                ? `${acceptedCount}/${totalInterventions} interventions accepted. ${unresolvedCount} unresolved.`
+                : "All interventions accepted. System is being monitored."
               : system.message}
           </p>
         </div>

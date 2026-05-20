@@ -1,4 +1,13 @@
+export type AthleteHistoryPoint = {
+  day: string;
+  readiness: number;
+  hrv: number;
+  sleep: number;
+  strain: number;
+};
+
 export type Athlete = {
+  id: string;
   name: string;
   hrv: number;
   baselineHrv: number;
@@ -6,9 +15,13 @@ export type Athlete = {
   baselineRestingHr: number;
   sleep: number;
   soreness: number;
+  history: AthleteHistoryPoint[];
 };
 
-export type ReadinessStatus = "Green" | "Yellow" | "Red";
+export type ReadinessStatus =
+  | "Green"
+  | "Yellow"
+  | "Red";
 
 export type ReadinessResult = {
   score: number;

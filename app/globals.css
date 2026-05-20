@@ -254,3 +254,124 @@ body {
 .neural-node-red {
   animation: neuralRed 2.2s ease-in-out infinite;
 }
+@keyframes neuralFlow {
+  0% {
+    transform: translateX(0px) translateY(0px);
+  }
+
+  50% {
+    transform: translateX(12px) translateY(-8px);
+  }
+
+  100% {
+    transform: translateX(0px) translateY(0px);
+  }
+}
+
+@keyframes neuralFlowReverse {
+  0% {
+    transform: translateX(0px) translateY(0px);
+  }
+
+  50% {
+    transform: translateX(-10px) translateY(10px);
+  }
+
+  100% {
+    transform: translateX(0px) translateY(0px);
+  }
+}
+
+@keyframes neuralPulse {
+  0% {
+    opacity: 0.25;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1.08);
+  }
+
+  100% {
+    opacity: 0.25;
+    transform: scale(1);
+  }
+}
+
+.neural-flow {
+  animation: neuralFlow 18s ease-in-out infinite;
+}
+
+.neural-flow-slow {
+  animation: neuralFlow 28s ease-in-out infinite;
+}
+
+.neural-flow-reverse {
+  animation: neuralFlowReverse 24s ease-in-out infinite;
+}
+
+.neural-node-pulse {
+  animation: neuralPulse 5s ease-in-out infinite;
+}
+
+.neural-node-pulse-slow {
+  animation: neuralPulse 8s ease-in-out infinite;
+}
+@keyframes pageBreatheIn {
+  0% {
+    opacity: 0;
+    filter: blur(18px);
+    transform: scale(0.985);
+  }
+
+  55% {
+    opacity: 1;
+    filter: blur(4px);
+    transform: scale(1.006);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1);
+  }
+}
+
+.page-breathe-in {
+  animation: pageBreatheIn 900ms ease-out both;
+}
+@keyframes monitoredHeroBreathe {
+  0% {
+    transform: scale(1);
+    filter: blur(0px);
+
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 0 40px rgba(110, 231, 183, 0.03);
+  }
+
+  50% {
+    transform: scale(1.012);
+    filter: blur(0.2px);
+
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 0 100px rgba(110, 231, 183, 0.07);
+  }
+
+  100% {
+    transform: scale(1);
+    filter: blur(0px);
+
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 0 40px rgba(110, 231, 183, 0.03);
+  }
+}
+
+.monitored-hero-breathe {
+  animation: monitoredHeroBreathe 8s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform, filter, box-shadow;
+}
