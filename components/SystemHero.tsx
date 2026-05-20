@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 type SystemHeroProps = {
   teamScore: number;
   system: {
@@ -18,26 +22,56 @@ export default function SystemHero({
   setAcknowledged,
   children,
 }: SystemHeroProps) {
+  const [expanded, setExpanded] = useState(true);
+
+  useEffect(() => {
+    if (acknowledged) {
+      setExpanded(false);
+    } else {
+      setExpanded(true);
+    }
+  }, [acknowledged]);
+
+  const compact = acknowledged && !expanded;
+
   return (
-    <section className="relative mt-12 overflow-hidden rounded-[40px] border border-neutral-800 bg-neutral-900/80 p-12">
-      <div className="absolute inset-0 opacity-40">
-        <div className="absolute left-[10%] top-[20%] h-64 w-64 rounded-full bg-green-400/10 blur-3xl ambient-drift" />
-        <div className="absolute right-[5%] top-[10%] h-72 w-72 rounded-full bg-yellow-400/5 blur-3xl ambient-drift-slow" />
+    <section
+      onClick={() => {
+        if (compact) setExpanded(true);
+      }}
+      className={`relative mt-12 overflow-hidden rounded-[42px] border transition-all duration-[1200ms] ${
+        compact
+          ? "ml-auto max-w-xl cursor-pointer border-white/10 bg-white/[0.035] p-6 backdrop-blur-3xl"
+          : "border-white/10 bg-white/[0.05] p-12 backdrop-blur-3xl"
+      }`}
+    >
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute left-[-10%] top-[-20%] h-80 w-80 rounded-full bg-white/[0.03] blur-3xl" />
+        <div className="absolute right-[-12%] top-[10%] h-72 w-72 rounded-full bg-white/[0.025] blur-3xl" />
+        <div className="absolute inset-[1px] rounded-[41px] border border-white/[0.04]" />
       </div>
 
-      <div className="relative z-10 flex flex-col items-center text-center">
+      <div
+        className={`relative z-10 flex items-center ${
+          compact ? "justify-between gap-6" : "flex-col text-center"
+        }`}
+      >
         <div
-          className={`relative flex h-44 w-44 items-center justify-center ${system.glow}`}
+          className={`relative flex items-center justify-center ${system.glow} ${
+            compact ? "h-24 w-24" : "h-48 w-48"
+          }`}
         >
           <svg
-            className="absolute inset-0 h-44 w-44 -rotate-90"
+            className={`absolute inset-0 -rotate-90 ${
+              compact ? "h-24 w-24" : "h-48 w-48"
+            }`}
             viewBox="0 0 100 100"
           >
             <circle
               cx="50"
               cy="50"
               r="42"
-              stroke="#262626"
+              stroke="rgba(255,255,255,0.08)"
               strokeWidth="10"
               fill="none"
             />
@@ -55,40 +89,66 @@ export default function SystemHero({
             />
           </svg>
 
-          <div className="text-center">
-            <p className="text-5xl font-bold">{teamScore}</p>
-            <p className="mt-1 text-sm text-neutral-400">Team Readiness</p>
+          <div className="relative z-10 text-center">
+            <p className={compact ? "text-2xl font-bold" : "text-5xl font-bold"}>
+              {teamScore}
+            </p>
+
+            {!compact && (
+              <p className="mt-1 text-sm text-white/45">
+                Team Readiness
+              </p>
+            )}
           </div>
         </div>
 
-        <h1 className={`mt-10 text-5xl font-bold tracking-tight ${system.color}`}>
-          {system.label}
-        </h1>
+        <div className={compact ? "flex-1 text-left" : "mt-10 text-center"}>
+          <h1
+            className={`font-bold tracking-tight ${system.color} ${
+              compact ? "text-2xl" : "text-5xl"
+            }`}
+          >
+            {system.label}
+          </h1>
 
-        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-neutral-300">
-          {system.message}
-        </p>
+          <p
+            className={`mt-3 leading-relaxed text-white/65 ${
+              compact ? "text-sm" : "max-w-2xl text-lg"
+            }`}
+          >
+            {compact
+              ? "System monitored. Click to expand."
+              : system.message}
+          </p>
+        </div>
 
-        {teamScore < 80 && !acknowledged && (
+        {!compact && teamScore < 80 && !acknowledged && (
           <button
             onClick={() => setAcknowledged(true)}
-            className="mt-8 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-black hover:bg-neutral-200 transition"
+            className="mt-8 rounded-2xl border border-white/10 bg-white/[0.06] px-6 py-3 text-sm font-medium text-white backdrop-blur-xl transition-all duration-500 hover:bg-white/[0.1]"
           >
             Acknowledge System State
           </button>
         )}
 
-        {acknowledged && teamScore < 80 && (
+        {!compact && acknowledged && teamScore < 80 && (
           <button
-            onClick={() => setAcknowledged(false)}
-            className="mt-8 rounded-xl border border-neutral-700 px-5 py-3 text-sm text-neutral-300 hover:bg-neutral-800 transition"
+            onClick={(event) => {
+              event.stopPropagation();
+              setAcknowledged(false);
+            }}
+            className="mt-8 rounded-2xl border border-white/10 bg-white/[0.04] px-6 py-3 text-sm font-medium text-white/70 backdrop-blur-xl transition-all duration-500 hover:bg-white/[0.08]"
           >
             Reopen Review
           </button>
         )}
-
-        {children}
       </div>
+
+      {!compact && children && (
+        <div className="relative z-10 mt-10 w-full">
+          {children}
+        </div>
+      )}
     </section>
   );
 }
