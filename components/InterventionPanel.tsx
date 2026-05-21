@@ -63,7 +63,13 @@ function InterventionCard({
   onAccept: () => void;
 }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.035] p-6 text-left backdrop-blur-2xl transition-all duration-700">
+    <div
+  className={`rounded-2xl border p-6 text-left backdrop-blur-2xl transition-all duration-700 ${
+    accepted
+      ? "border-emerald-300/15 bg-emerald-300/[0.035] shadow-[0_0_34px_rgba(110,231,183,0.08)]"
+      : "border-white/10 bg-white/[0.035]"
+  }`}
+>
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm text-white/35">Athlete</p>
@@ -112,9 +118,13 @@ function InterventionCard({
           onClick={onAccept}
           className="rounded-xl bg-white px-4 py-2 text-sm font-medium text-black transition hover:bg-neutral-200"
         >
-          {accepted ? "Monitoring Response" : "Accept Adjustment"}
+          {accepted ? "Response Active" : "Accept Adjustment"}
         </button>
-
+{accepted && (
+  <p className="mt-5 rounded-2xl border border-emerald-300/10 bg-[#0b0b0b]/80 px-4 py-3 text-sm text-emerald-200/70">
+    Intervention applied. Monitoring next physiological response.
+  </p>
+)}
         <button className="rounded-xl border border-white/10 px-4 py-2 text-sm text-white/55 transition hover:bg-white/[0.06]">
           Modify
         </button>

@@ -17,15 +17,22 @@ export default function AthleteGrid({
   hoveredAthlete,
   setHoveredAthlete,
 }: AthleteGridProps) {
+  const sortedAthletes = [...athletes].sort((a, b) => {
+    const scoreA = calculateReadiness(a).score;
+    const scoreB = calculateReadiness(b).score;
+
+    return scoreA - scoreB;
+  });
+
   return (
     <section className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-      {athletes.map((athlete) => {
+      {sortedAthletes.map((athlete) => {
         const readiness = calculateReadiness(athlete);
 
         return (
           <AthleteCard
-            id={athlete.id}
             key={athlete.id}
+            id={athlete.id}
             name={athlete.name}
             status={readiness.status}
             color={readiness.color}

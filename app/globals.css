@@ -375,3 +375,41 @@ body {
   transform-origin: center;
   will-change: transform, filter, box-shadow;
 }
+@keyframes backgroundBlob {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(64px);
+  }
+
+  50% {
+    transform: translate3d(24px, -18px, 0) scale(1.08);
+    filter: blur(72px);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(64px);
+  }
+}
+
+@keyframes backgroundBlobSlow {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-18px, 22px, 0) scale(1.06);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.background-blob {
+  animation: backgroundBlob 12s ease-in-out infinite;
+}
+
+.background-blob-slow {
+  animation: backgroundBlobSlow 18s ease-in-out infinite;
+}

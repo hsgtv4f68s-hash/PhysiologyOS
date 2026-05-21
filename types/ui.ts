@@ -4,11 +4,9 @@ import type { SystemStatus, TelemetryItem } from "@/types/athlete";
 export type SystemHeroProps = {
   teamScore: number;
   system: SystemStatus;
-  acknowledged: boolean;
-  setAcknowledged: (value: boolean) => void;
-  children?: ReactNode;
   acceptedCount: number;
-totalInterventions: number;
+  totalInterventions: number;
+  children?: ReactNode;
 };
 
 export type AthleteCardProps = {
